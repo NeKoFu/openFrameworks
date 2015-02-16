@@ -23,6 +23,10 @@ bool visualStudioProject::createProjectFile(){
 	ofFile::copyFromTo(ofFilePath::join(templatePath,"emptyExample.vcxproj.filters"),filters, false, true);
 	ofFile::copyFromTo(ofFilePath::join(templatePath,"icon.rc"), projectDir + "icon.rc", false, true);
 
+	string compiled_project_path = ofFilePath::join(templatePath, "..\\..\\..\\libs\\openFrameworksCompiled\\project\\vs");
+	ofFile::copyFromTo(ofFilePath::join(compiled_project_path, "icon.ico"), projectDir + "icon.ico", false, true);
+	ofFile::copyFromTo(ofFilePath::join(compiled_project_path, "icon_debug.ico"), projectDir + "icon_debug.ico", false, true);
+
 	ofFile filterFile(filters);
 	string temp = filterFile.readToBuffer();
 	pugi::xml_parse_result result = filterXmlDoc.load(temp.c_str());
@@ -34,7 +38,7 @@ bool visualStudioProject::createProjectFile(){
     findandreplaceInTexfile(project,"emptyExample",projectName);
 
     string relRoot = getOFRelPath(ofFilePath::removeTrailingSlash(projectDir));
-    if (relRoot != "../../../"){
+    if (relRoot != "..\\..\\..\\"){
 
         string relRootWindows = relRoot;
         // let's make it windows friendly:
@@ -46,9 +50,9 @@ bool visualStudioProject::createProjectFile(){
         // sln has windows paths:
         findandreplaceInTexfile(solution, "..\\..\\..\\", relRootWindows);
 
-        // vcx has unixy paths:
+        // new vcx has also windows paths:
         //..\..\..\libs
-        findandreplaceInTexfile(project, "../../../", relRoot);
+		findandreplaceInTexfile(project, "..\\..\\..\\", relRootWindows);
     }
 
     return true;

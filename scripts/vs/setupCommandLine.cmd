@@ -31,8 +31,8 @@ if not defined VCINSTALLDIR (
 	if "%VS_VERSION%"=="80" (call "%VS80COMNTOOLS%vsvars32.bat") else (
 		if "%VS_VERSION%"=="90" (call "%VS90COMNTOOLS%vsvars32.bat") else (
 			if "%VS_VERSION%"=="100" (call "%VS100COMNTOOLS%vsvars32.bat") else (
-				if "%VS_VERSION%"=="110" (call "%VS110COMNTOOLS%vsvars32.bat")
-					if "%VS_VERSION%"=="110" (call "%VS120COMNTOOLS%vsvars32.bat")
+				if "%VS_VERSION%"=="110" (call "%VS110COMNTOOLS%vsvars32.bat") else (
+					if "%VS_VERSION%"=="120" (call "%VS120COMNTOOLS%vsvars32.bat")
 				))))
 
 	if not defined VSINSTALLDIR (
