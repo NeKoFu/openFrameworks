@@ -111,8 +111,10 @@ PLATFORM SPECIFIC
 	/ visual studio project moved up to visual studio 2013
 	/ AdditionalIncludeDirectories and AdditionalLibraryDirectories: changed paths in visual studio .props files to be less dependent of openframeworks's hierarchy. Now you can use projectGenerator to create a new vs project anywhere on your drive without break.
 	/ glew library for windows updated to v1.11.0 for vs2013
+	/ glfw library for windows updated to v3.1 for vs2013
 	/ openssl library for windows updated to v1.0.2 for vs2013
 	/ poco library for windows updated to v1.6.0 for vs2013
+	/ tess2 library for windows compiled for vs2013
 	/ videoInput library for windows updated to v0.1995 for vs2013
 
 ### osx
