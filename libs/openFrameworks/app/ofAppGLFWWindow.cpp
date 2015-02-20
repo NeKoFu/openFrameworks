@@ -258,6 +258,7 @@ void ofAppGLFWWindow::setup(const ofGLFWWindowSettings & _settings){
 	glfwSetMouseButtonCallback(windowP, mouse_cb);
 	glfwSetCursorPosCallback(windowP, motion_cb);
 	glfwSetKeyCallback(windowP, keyboard_cb);
+	glfwSetCharCallback(windowP, character_cb);
 	glfwSetWindowSizeCallback(windowP, resize_cb);
 	glfwSetWindowCloseCallback(windowP, exit_cb);
 	glfwSetScrollCallback(windowP, scroll_cb);
@@ -926,7 +927,7 @@ void ofAppGLFWWindow::error_cb(int errorCode, const char* errorDescription){
 }
 
 //------------------------------------------------------------
-void ofAppGLFWWindow::keyboard_cb(GLFWwindow* windowP_, int keycode, int scancode, unsigned int codepoint, int action, int mods) {
+void ofAppGLFWWindow::keyboard_cb(GLFWwindow* windowP_, int keycode, int scancode, int action, int mods) {
 	int key;
 	switch (keycode) {
 		case GLFW_KEY_ESCAPE:
@@ -1035,16 +1036,23 @@ void ofAppGLFWWindow::keyboard_cb(GLFWwindow* windowP_, int keycode, int scancod
 			key = OF_KEY_TAB;
 			break;   
 		default:
-			key = codepoint;
+			key = 0;
 			break;
 	}
 
 	ofAppGLFWWindow * instance = static_cast<ofAppGLFWWindow *>(glfwGetWindowUserPointer(windowP_));
 	if(action == GLFW_PRESS || action == GLFW_REPEAT){
-		instance->events().notifyKeyPressed(key,keycode,scancode,codepoint);
+		instance->events().notifyKeyPressed(key,keycode,scancode);
 	}else if (action == GLFW_RELEASE){
-		instance->events().notifyKeyReleased(key,keycode,scancode,codepoint);
+		instance->events().notifyKeyReleased(key,keycode,scancode);
 	}
+}
+
+//------------------------------------------------------------
+void ofAppGLFWWindow::character_cb(GLFWwindow* windowP_, unsigned int codepoint) {
+	int key = codepoint;
+	ofAppGLFWWindow * instance = static_cast<ofAppGLFWWindow *>(glfwGetWindowUserPointer(windowP_));
+	instance->events().notifyKeyPressed(key, 0, 0, codepoint);
 }
 
 //------------------------------------------------------------
